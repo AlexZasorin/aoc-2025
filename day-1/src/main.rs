@@ -10,7 +10,7 @@ where
     Ok(io::BufReader::new(file).lines())
 }
 
-fn main() {
+fn part_one() -> u32 {
     let mut dial: u32 = 50;
     let mut count: u32 = 0;
 
@@ -34,5 +34,9 @@ fn main() {
         }
     }
 
-    println!("Count: {}", count);
+    count
+}
+
+fn main() {
+    println!("Count: {}", part_one());
 }
