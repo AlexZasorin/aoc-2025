@@ -37,6 +37,42 @@ fn part_one() -> u32 {
     count
 }
 
+fn part_two() -> u32 {
+    let mut dial = 50;
+    let mut count = 0;
+
+    if let Ok(lines) = read_lines("./input.txt") {
+        for line in lines.map_while(Result::ok) {
+            let dir = &line.chars().next().unwrap();
+            let mut num = line[1..].parse::<i32>().unwrap();
+
+            if *dir == 'L' {
+                let mut start_zero = dial == 0;
+                while num > dial {
+                    num -= dial + 1;
+                    dial = 99;
+                    count += if !start_zero { 1 } else { 0 };
+                    start_zero = false;
+                }
+
+                dial -= num;
+                count += if dial == 0 && !start_zero { 1 } else { 0 };
+            } else {
+                while num + dial > 99 {
+                    num -= 100 - dial;
+                    dial = 0;
+                    count += 1;
+                }
+
+                dial += num;
+            }
+        }
+    }
+
+    count
+}
+
 fn main() {
-    println!("Count: {}", part_one());
+    println!("Part 1 Count: {}", part_one());
+    println!("Part 2 Count: {}", part_two());
 }
